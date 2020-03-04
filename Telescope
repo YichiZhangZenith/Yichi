@@ -1,0 +1,22 @@
+#Import Data files and simply eliminate NA columns
+#Import libraries
+library("openxlsx")
+library("dplyr")
+GST_EXP_23007<-read.csv("C:/Users/yiczhang/Documents/GST/meta analysis/Exposure_23007_20190701_20200101.txt", header = TRUE,sep="|")
+GST_EXP_23007<-data.frame(GST_EXP_23007)
+GST_EXP_23007<-filter(GST_EXP_23007, aud != "")
+GST_EXP_23007<-GST_EXP_23007[,c("exposure_time_iso8601", "did","aud")]
+
+GST_EXP_23008<-read.csv("C:/Users/yiczhang/Documents/GST/meta analysis/Exposure_23008_20190701_20200101.txt", header = TRUE,sep="|")
+GST_EXP_23008<-data.frame(GST_EXP_23008)
+GST_EXP_23008<-filter(GST_EXP_23008, iol != "")
+GST_EXP_23008<-GST_EXP_23008[,c("exposure_time_iso8601","did","iol")]
+
+GST_EXP_23009<-read.csv("C:/Users/yiczhang/Documents/GST/meta analysis/Exposure_23009_20190701_20200101.txt", header = TRUE,sep="|")
+GST_EXP_23009<-data.frame(GST_EXP_23009)
+GST_EXP_23009<-filter(GST_EXP_23009, plcmnt != "")
+GST_EXP_23009<-GST_EXP_23009[,c("exposure_time_iso8601","did","plcmnt")]
+
+####Merge all three data frames to one flat view by device id and exposure time
+GST_merge<-merge(GST_EXP_23007,GST_EXP_23008, by=c("exposure_time_iso8601","did"), all=T)
+GST_merge<-merge(GST_merge,GST_EXP_23009, by=c("exposure_time_iso8601","did"), all=T)
