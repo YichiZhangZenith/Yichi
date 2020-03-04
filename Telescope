@@ -20,3 +20,9 @@ GST_EXP_23009<-GST_EXP_23009[,c("exposure_time_iso8601","did","plcmnt")]
 ####Merge all three data frames to one flat view by device id and exposure time
 GST_merge<-merge(GST_EXP_23007,GST_EXP_23008, by=c("exposure_time_iso8601","did"), all=T)
 GST_merge<-merge(GST_merge,GST_EXP_23009, by=c("exposure_time_iso8601","did"), all=T)
+
+###Check exposure duplication cross multiple sources and leave disticnt record by one device id and exposure time
+
+GST_merge_new<-GST_merge %>% 
+  distinct()
+
