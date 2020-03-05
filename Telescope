@@ -39,4 +39,16 @@ Purchase_Intent_Visit<- read.csv("C:/Users/yiczhang/Documents/GST/meta analysis/
 Purchase_Intent_Visit$visit_time_iso8601<- as.character(Purchase_Intent_Visit$timestamp_iso8601)
 Purchase_Intent_Visit$did<- tolower(Purchase_Intent_Visit$did)
 
+###Process Date format to YYYY-MM-DD
+Purchase_Intent_Visit$Date <- str_split_fixed(as.character(Purchase_Intent_Visit$timestamp_iso8601),"T",n=2)[,1]
+Purchase_Intent_Visit$Date<-as.Date(Purchase_Intent_Visit$Date, origin = "1970-01-01", "%Y-%m-%d")
+#Check the earliest and latest visit record
+min(Purchase_Intent_Visit$Date)# "2019-06-16"
+max(Purchase_Intent_Visit$Date)#   "2020-01-31"
+
+Purchase_Intent_Visit$day_of_week<- weekdays(Purchase_Intent_Visit$Date)
+Purchase_Intent_Visit$did <- as.character(Purchase_Intent_Visit$did)
+Purchase_Intent_Visit$dmaid <- as.character(Purchase_Intent_Visit$dmaid)
+
+
 
